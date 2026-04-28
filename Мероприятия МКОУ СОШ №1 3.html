@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Школьное мероприятие</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            /* 🔽 ФОН — ФОТО ШКОЛЫ 🔽 */
+            background-image: url('https://adminliski.gosuslugi.ru/netcat_files/38/232/7O1uw3DGrXY.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Полупрозрачная подложка для читаемости текста */
+        .overlay {
+            background: rgba(0, 0, 0, 0.5);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(79, 70, 229, 0.85);
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            margin: 5px 0 0;
+            font-size: 16px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .timer {
+            background: rgba(245, 158, 11, 0.9);
+            text-align: center;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        .block {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            backdrop-filter: blur(5px);
+        }
+        .block h2 {
+            color: #4f46e5;
+            margin-top: 0;
+        }
+
+        .schedule-row {
+            display: flex;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 10px;
+            margin: 8px 0;
+            border-left: 4px solid #818cf8;
+        }
+        .schedule-time {
+            font-weight: bold;
+            color: #4f46e5;
+            min-width: 55px;
+        }
+
+        .news-row {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .news-date {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Кнопка настроек */
+        .settings-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 999;
+        }
+
+        /* Панель настроек */
+        .settings-panel {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            width: 280px;
+            z-index: 1000;
+        }
+        .settings-panel label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        .settings-panel input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .settings-panel button {
+            background: #4f46e5;
+            color:
+
+
+white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        .error-msg {
+            color: red;
+            font-size: 13px;
+            display: none;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay">
+
+    <div class="header">
+        <h1 id="title">9 Мая</h1>
+        <p id="subtitle">МКОУ СОШ №1 • г. Лиски</p>
+    </div>
+
+    <div class="timer" id="timer"></div>
+
+    <div class="content">
+        <div class="block">
+            <h2>📋 Расписание</h2>
+            <div class="schedule-row"><span class="schedule-time">10:00</span><div><strong>Открытие</strong>
+<small>📍 Актовый зал</small></div></div>
+            <div class="schedule-row"><span class="schedule-time">10:30</span><div><strong>Конкурс чтецов</strong>
+<small>📍 Каб. 215</small></div></div>
+            <div class="schedule-row"><span class="schedule-time">11:30</span><div><strong>Мастер-класс</strong>
+<small>📍 Лаборатория</small></div></div>
+            <div class="schedule-row"><span class="schedule-time">12:30</span><div><strong>Обед</strong>
+<small>📍 Столовая</small></div></div>
+            <div class="schedule-row"><span class="schedule-time">13:30</span><div><strong>Спортивные эстафеты</strong>
+<small>📍 Спортзал</small></div></div>
+        </div>
+
+        <div class="block">
+            <h2>📰 Новости</h2>
+            <div class="news-row">
+                <div class="news-date">📅 26 мая</div>
+                <p>Каникулы!</p>
+            </div>
+            <div class="news-row">
+                <div class="news-date">📅 18 мая</div>
+                <p>Открыта регистрация на мастер-классы.</p>
+            </div>
+        </div>
+
+        <div class="block">
+            <h2>📞 Контакты</h2>
+            <p>📱 <strong>Телефон:</strong> +7 (47391) 3-90-94</p>
+            <p>📧 <strong>Email:</strong> school1@liski.ru</p>
+            <p>📍 <strong>Адрес:</strong>г. Лиски, ул. 40 лет Победы №1</p>
+        </div>
+    </div>
+
+    <div class="footer">© МКОУ СОШ №1 г. Лиски</div>
+
+</div>
+
+<!-- Кнопка настроек -->
+<button class="settings-btn" onclick="openSettings()">⚙️</button>
+
+<!-- Панель настроек (закрыта паролем) -->
+<div class="settings-panel" id="settingsPanel">
+    <h3>🔐 Введите пароль</h3>
+    <input type="password" id="passwordInput" placeholder="Пароль">
+    <p class="error-msg" id="errorMsg">❌ Неверный пароль</p>
+    <button onclick="checkPassword()">Войти</button>
+</div>
+
+<script>
+    // 🔒 ПАРОЛЬ — поменяйте на свой
+    var PASSWORD = 'admin123';
+
+    // Дата мероприятия
+    var targetDate = new Date('2026-05-09T10:00:00').getTime();
+
+    // Таймер
+    function updateTimer() {
+        var now = new Date().getTime();
+        var diff = targetDate - now;
+        var timerEl = document.getElementById('timer');
+
+        if (diff <= 0) {
+            timerEl.innerHTML = '🎊 Мероприятие уже началось!';
+            return;
+        }
+
+        var days = Math.floor(diff / 86400000);
+        var hours = Math.floor((diff % 86400000) / 3600000);
+        var minutes = Math.floor((diff % 3600000) / 60000);
+        var seconds = Math.floor((diff % 60000) / 1000);
+
+        timerEl.innerHTML = 'До начала: ' + days + 'д ' + hours + 'ч ' + minutes + 'м ' + seconds + 'с';
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // Открыть панель
+    function openSettings() {
+        var panel = document.getElementById('settingsPanel');
+        if (panel.style.display === 'block') {
+            panel.style.display = 'none';
+        } else {
+            panel.style.display = 'block';
+            panel.innerHTML = `
+                <h3>🔐 Введите пароль</h3>
+                <input type="password" id="passwordInput" placeholder="Пароль">
+                <p class="error-msg" id="errorMsg" style="color:red;font-size:13px;display:none;margin-top:5px;">❌ Неверный пароль</p>
+                <button onclick="checkPassword()" style="width:100%;padding:10px;background:#4f46e5;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:10px;">Войти</button>
+                <button onclick="document.getElementById('settingsPanel').style.display='none'" style="width:100%;padding:10px;background:#e2e8f0;color:#333;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:5px;">✕ Закрыть</button>
+            `;
+        }
+    }
+
+    // Проверка пароля
+    function checkPassword() {
+        var input = document.getElementById('passwordInput').value;
+        if (input === PASSWORD) {
+            document.getElementById('errorMsg').style.display = 'none';
+            showEditor();
+        } else {
+            document.getElementById('errorMsg').style.display = 'block';
+        }
+    }
+
+    // Показать редактор
+    function showEditor() {
+        var panel = document.getElementById('settingsPanel');
+        panel.innerHTML = `
+            <h3>⚙️ Настройки</h3>
+            <label style="display:block;margin-top:10px;font-weight:bold;">Название мероприятия:</label>
+            <input type="text" id="inputTitle" value="${document.getElementById('title').innerHTML}" style="width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ddd;border-radius:8px;">
+            <label style="display:block;margin-top:10px;font-weight:bold;">Дата проведения:</label>
+            <input type="date" id="inputDate" value="2026-05-25" style="width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ddd;border-radius:8px;">
+            <button onclick="saveSettings()" style="width:100%;padding:10px;background:#4f46e5;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:5px;">✅ Сохранить</button>
+            <button onclick="document.getElementById('settingsPanel').style.display='none'" style="width:100%;padding:10px;background:#e2e8f0;color:#333;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:5px;">✕ Закрыть</button>
+        `;
+    }
+
+    // Сохранить
+    function saveSettings() {
+        var newTitle = document.getElementById('inputTitle').value;
+        var newDate = document.getElementById('inputDate').value + 'T10:00:00';
+
+        document.getElementById('title').textContent = newTitle;
+        targetDate = new Date(newDate).getTime();
+        updateTimer();
+
+        document.getElementById('settingsPanel').style.display = 'none';
+        alert('✅ Настройки сохранены!');
+    }
+</script>
+
+</body>
+</html>
